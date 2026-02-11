@@ -1,0 +1,7 @@
+# Placeholder file to ensure textures directory exists
+
+This directory is where you should place planet texture files.
+
+See TEXTURE_SETUP.md for detailed instructions on obtaining and installing textures.
+
+The app will work without textures using fallback colored materials, but realistic textures dramatically improve the visual quality.
