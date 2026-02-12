@@ -7,7 +7,7 @@ import * as THREE from 'three';
 
 export function createStarfield(
   scene: THREE.Scene,
-  quality: 'low' | 'medium' | 'high'
+  _quality: 'low' | 'medium' | 'high'
 ): THREE.Mesh {
   const radius = 10000;
 
