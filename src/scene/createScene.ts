@@ -12,7 +12,8 @@ export interface SceneObjects {
 export function createScene(container: HTMLElement): SceneObjects {
   const scene = new THREE.Scene();
   scene.fog = null; // No fog in space
-  scene.background = new THREE.Color(0x000000); // Pure black space
+  // Background set to null - will use Milky Way skybox instead
+  scene.background = null;
 
   // Create camera
   const camera = new THREE.PerspectiveCamera(

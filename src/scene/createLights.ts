@@ -16,7 +16,7 @@ export function createLights(scene: THREE.Scene): LightObjects {
   // Primary light source: the Sun
   // Using PointLight because the Sun is a point source that radiates in all directions
   // This is more physically accurate than DirectionalLight for a solar system
-  const sunLight = new THREE.PointLight(0xffffff, 8.0, 0, 1.2);
+  const sunLight = new THREE.PointLight(0xffffff, 15.0, 0, 1.0);
   sunLight.position.set(0, 0, 0);
   
   // The decay parameter (2) provides physically accurate falloff: intensity ∝ 1/distance²
@@ -26,7 +26,7 @@ export function createLights(scene: THREE.Scene): LightObjects {
 
   // Very subtle ambient light to prevent completely black shadows
   // In reality, this simulates scattered starlight and light reflected from distant objects
-  const ambientLight = new THREE.AmbientLight(0x404040, 0.3);
+  const ambientLight = new THREE.AmbientLight(0x888888, 0.5);
   scene.add(ambientLight);
 
   return { sunLight, ambientLight };

@@ -32,7 +32,7 @@ class CosmosApp {
   private settings!: Settings;
 
   private solarSystem!: Awaited<ReturnType<typeof createSolarSystem>>;
-  private starfield!: THREE.Points;
+  private starfield!: THREE.Mesh;
 
   private clock = new THREE.Clock();
   private time = 0;
@@ -64,8 +64,8 @@ class CosmosApp {
     // Create lights
     createLights(this.scene);
 
-    // Create starfield
-    this.showLoadingStatus('Generating starfield...');
+    // Create starfield (Milky Way background)
+    this.showLoadingStatus('Loading Milky Way background...');
     this.starfield = createStarfield(this.scene, 'high');
 
     // Setup texture loading

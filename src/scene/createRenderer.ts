@@ -23,7 +23,7 @@ export function createRenderer(
 
   // Physical rendering settings
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.4;
+  renderer.toneMappingExposure = 1.8;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
 
   // Enable shadows if needed (disabled for performance in space)

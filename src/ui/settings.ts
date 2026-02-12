@@ -153,8 +153,8 @@ export function applySettings(
   scene: THREE.Scene,
   orbitLines: THREE.Line[],
   labels: THREE.Sprite[],
-  starfield: THREE.Points
-): { starfield: THREE.Points } {
+  starfield: THREE.Mesh
+): { starfield: THREE.Mesh } {
   // Update renderer quality
   updateRendererQuality(renderer, settings.getCurrentQuality());
 

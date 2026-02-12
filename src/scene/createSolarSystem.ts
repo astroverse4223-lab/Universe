@@ -400,7 +400,7 @@ async function createPlanet(
 
     material = new THREE.MeshStandardMaterial({
       map: albedoTexture,
-      roughness: 0.8,
+      roughness: 0.6,
       metalness: 0.0,
       emissive: new THREE.Color(0x000000),
       emissiveIntensity: 0.0,
@@ -422,7 +422,7 @@ async function createPlanet(
     const proceduralTexture = generateProceduralTextureForPlanet(planetData.name, planetData.color);
     material = new THREE.MeshStandardMaterial({
       map: proceduralTexture,
-      roughness: 0.8,
+      roughness: 0.6,
       metalness: 0.0,
       emissive: new THREE.Color(0x000000),
       emissiveIntensity: 0.0,

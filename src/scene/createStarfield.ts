@@ -1,73 +1,35 @@
 /**
- * Realistic starfield generation
- * Creates a NASA-like star background using points
+ * Realistic starfield using Milky Way texture
+ * Creates a NASA-like star background using real space photography
  */
 
 import * as THREE from 'three';
-import { fibonacciSphere } from '../utils/math';
 
 export function createStarfield(
   scene: THREE.Scene,
   quality: 'low' | 'medium' | 'high'
-): THREE.Points {
-  // Create minimal starfield with very subtle, distant stars
-  const starCount = quality === 'high' ? 3000 : quality === 'medium' ? 1500 : 800;
+): THREE.Mesh {
   const radius = 10000;
 
-  // Generate star positions using Fibonacci sphere for even distribution
-  const positions = new Float32Array(starCount * 3);
-  const colors = new Float32Array(starCount * 3);
-  const sizes = new Float32Array(starCount);
+  // Create sphere geometry for skybox
+  const geometry = new THREE.SphereGeometry(radius, 64, 64);
 
-  const starPositions = fibonacciSphere(starCount, radius);
+  // Load Milky Way texture
+  const textureLoader = new THREE.TextureLoader();
+  const milkyWayTexture = textureLoader.load('/textures/milky_way.jpg');
+  
+  milkyWayTexture.colorSpace = THREE.SRGBColorSpace;
+  milkyWayTexture.mapping = THREE.EquirectangularReflectionMapping;
 
-  for (let i = 0; i < starCount; i++) {
-    const pos = starPositions[i];
-    positions[i * 3] = pos.x;
-    positions[i * 3 + 1] = pos.y;
-    positions[i * 3 + 2] = pos.z;
-
-    // Star color variation (realistic stellar colors)
-    const temp = Math.random();
-    if (temp < 0.1) {
-      // Blue-white stars (hot)
-      colors[i * 3] = 0.7 + Math.random() * 0.3;
-      colors[i * 3 + 1] = 0.8 + Math.random() * 0.2;
-      colors[i * 3 + 2] = 1.0;
-    } else if (temp < 0.3) {
-      // Red-orange stars (cool)
-      colors[i * 3] = 1.0;
-      colors[i * 3 + 1] = 0.4 + Math.random() * 0.3;
-      colors[i * 3 + 2] = 0.2 + Math.random() * 0.2;
-    } else {
-      // White-yellow stars (most common) - very subtle
-      colors[i * 3] = 0.6 + Math.random() * 0.2;
-      colors[i * 3 + 1] = 0.6 + Math.random() * 0.2;
-      colors[i * 3 + 2] = 0.6 + Math.random() * 0.2;
-    }
-
-    // Size variation (much smaller, more distant looking)
-    const brightness = Math.random();
-    sizes[i] = brightness < 0.9 ? 0.5 : brightness < 0.98 ? 1.0 : 1.5;
-  }
-
-  const geometry = new THREE.BufferGeometry();
-  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-  geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-  geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
-
-  // Shader material for realistic star rendering
-  const material = new THREE.PointsMaterial({
-    size: 0.8,
-    vertexColors: true,
-    transparent: true,
-    opacity: 0.4,
-    sizeAttenuation: false,
-    blending: THREE.NormalBlending,
-    depthWrite: false,
+  // Create material with space texture
+  const material = new THREE.MeshBasicMaterial({
+    map: milkyWayTexture,
+    side: THREE.BackSide, // Render on inside of sphere
+    transparent: false,
+    fog: false,
   });
 
-  const starfield = new THREE.Points(geometry, material);
+  const starfield = new THREE.Mesh(geometry, material);
   scene.add(starfield);
 
   return starfield;
@@ -78,9 +40,9 @@ export function createStarfield(
  */
 export function updateStarfieldQuality(
   scene: THREE.Scene,
-  currentStarfield: THREE.Points,
+  currentStarfield: THREE.Mesh,
   quality: 'low' | 'medium' | 'high'
-): THREE.Points {
+): THREE.Mesh {
   scene.remove(currentStarfield);
   currentStarfield.geometry.dispose();
   (currentStarfield.material as THREE.Material).dispose();
