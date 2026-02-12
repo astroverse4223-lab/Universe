@@ -21,12 +21,6 @@ dist-ssr/
 *.sln
 *.sw?
 
-# Texture files (users download their own)
-public/textures/*.jpg
-public/textures/*.png
-public/textures/*.jpeg
-!public/textures/.gitkeep
-
 # Environment files
 .env
 .env.local
